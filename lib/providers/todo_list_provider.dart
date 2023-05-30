@@ -15,4 +15,9 @@ class TodoListProvider with ChangeNotifier {
     _todoList = _todoList.where((item) => item.id != todo.id).toList();
     notifyListeners();
   }
+
+  void updateTodo(TodoModel todo) {
+    _todoList[_todoList.indexWhere((item) => item.id == todo.id)] = todo;
+    notifyListeners();
+  }
 }

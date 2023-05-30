@@ -63,7 +63,13 @@ class AddEditTodoWidget extends StatelessWidget {
               );
             } else {
               if (todo != null) {
-
+                Provider.of<TodoListProvider>(context, listen: false)
+                    .updateTodo(
+                  TodoModel(
+                    id: todo!.id,
+                    todo: _todoController.text,
+                  ),
+                );
               } else {
                 const uuid = Uuid();
 

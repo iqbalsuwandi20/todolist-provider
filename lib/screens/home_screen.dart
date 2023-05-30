@@ -39,6 +39,16 @@ class HomeScreen extends StatelessWidget {
                 child: Card(
                   child: ListTile(
                     title: Text(todo.todo),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AddEditTodoWidget(
+                            title: "Edit Todo",
+                            todo: todo,
+                          );
+                        });
+                    },
                   ),
                 ),
                 onDismissed: (direction) {
