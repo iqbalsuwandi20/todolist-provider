@@ -21,23 +21,44 @@ class HomeScreen extends StatelessWidget {
         return ListView(
           padding: const EdgeInsets.all(20.0),
           children: todoProvider.todoList.isNotEmpty
-          ? todoProvider.todoList.map((todo) {
-            return Card(
-              child: ListTile(
-                title: Text(todo.todo),
-              ),
-            );
+            ? todoProvider.todoList.map((todo) {
+              return Dismissible(
+                key: Key(todo.id),
+                background: Container(
+                  color: Colors.red.shade300,
+                  child: const Center(
+                    child: Text(
+                      "Delete?",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                child: Card(
+                  child: ListTile(
+                    title: Text(todo.todo),
+                  ),
+                ),
+                onDismissed: (direction) {
+                  Provider.of<TodoListProvider>(
+                    context,
+                    listen: false,
+                  ).removeTodo(todo);
+                },
+              );
           }).toList()
               : [
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height - 100.0,
-                    child: const Center(
-                      child: Text(
-                        "Todo list is still empty!",
-                        textAlign: TextAlign.center,
-                      ),
+                  child: const Center(
+                    child: Text(
+                      "Todo list is still empty",
+                      textAlign: TextAlign.center,
                     ),
+                  ),
                 ),
           ],
         );

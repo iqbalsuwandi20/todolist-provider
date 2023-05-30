@@ -10,4 +10,9 @@ class TodoListProvider with ChangeNotifier {
     _todoList.add(todo);
     notifyListeners();
   }
+
+  void removeTodo(TodoModel todo) {
+    _todoList = _todoList.where((item) => item.id != todo.id).toList();
+    notifyListeners();
+  }
 }
