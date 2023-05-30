@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_provider/providers/todo_list_provider.dart';
+import 'package:todolist_provider/widgets/add_edit_todo_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,22 +21,35 @@ class HomeScreen extends StatelessWidget {
         return ListView(
           padding: const EdgeInsets.all(20.0),
           children: todoProvider.todoList.isNotEmpty
-          ? [] : [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 100.0,
-              child: const Center(
-                child: Text(
-                  "Todo list masih kosong!",
-                  textAlign: TextAlign.center,
-                ),
+          ? todoProvider.todoList.map((todo) {
+            return Card(
+              child: ListTile(
+                title: Text(todo.todo),
               ),
-            ),
+            );
+          }).toList()
+              : [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height - 100.0,
+                    child: const Center(
+                      child: Text(
+                        "Todo list is still empty!",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                ),
           ],
         );
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const AddEditTodoWidget(title: "Add Todo");
+            });
+        },
         child: const Icon(Icons.add),
       ),
     );
